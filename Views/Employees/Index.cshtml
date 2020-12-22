@@ -1,0 +1,369 @@
+﻿@model IEnumerable<Go.Models.Employee>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+        <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+        <script src="~/Scripts/jPages.min.js" type="text/javascript"></script>
+        <script src="~/Scripts/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="~/Content/bootstrap.min.css" />
+        <link rel="stylesheet" href="~/Content/jPages.css" />
+        <style>
+        </style>
+</head>
+<body>
+    <div class="col-md-12">
+
+        <div class="col-md-4">
+            <h2>Customers</h2>
+        </div>
+        <div class="col-md-8">
+            <button class="btn btn-success pull-right " style="margin-top:40px;color:white;">
+                @Html.ActionLink("Add New Customer", "Create")
+            </button>
+        </div>
+    </div>
+    <div class="col-md-12 col-lg-12">
+        <div class="col-md-3 col-lg-3">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Actions" />
+                <span class="input-group-addon caret">
+                    <span class="caret"></span>
+                </span>
+            </div>
+
+        </div>
+        <div class="col-md-9">
+            <div class="col-md-5">
+                <div class="pull-right">
+
+                    <a class="btn btn-default" data-target="#searchmodal" data-toggle="modal">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </a>
+                    <a class="fiter btn btn-default" data-target="#filtermodal" data-toggle="modal">
+                        <span class="glyphicon glyphicon-filter fiter"></span>
+                    </a>
+                    <a class="btn btn-default" id="eue">
+                        <span class="glyphicon glyphicon-eye-open"></span>
+                    </a>
+                    <a class="btn btn-default">
+                        <span class="glyphicon glyphicon-play-circle"></span>
+                    </a>
+                    <a class="btn btn-default" id="printt">
+                        <span class="glyphicon glyphicon-print"></span>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="col-md-7">
+                    <div class="input-group">
+                        <select id="itemsperpage" style="width:200px; height:33px;" class="form-control">
+                            <option >5</option>
+                            <option selected="selected">10</option>
+                            <option>20</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="holder">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+        </div>
+    </div>
+
+    <div class="col-md-5">
+        <div class="modal fade" id="searchmodal" tabindex="-1">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-body">
+                    <input type="text" id="searchtext" class="form-control" placeholder="Search..." />
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <div class="col-md-5">
+        <div class="modal fade" id="filtermodal" tabindex="-1">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <form class="">
+                            <div class="form-group">
+                                <label class="form-control">
+                                    FirstName :
+                                </label>
+                                <input type="text" id="firstnametext" class="form-control" placeholder="Search..." />
+
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control">LastName :</label>
+                                <input type="text" id="lastnametext" class="form-control" placeholder="Search..." />
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control">Email :</label>
+                                <input type="text" id="emailtext" class="form-control" placeholder="Search..." />
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control">City :</label>
+                                <input type="text" id="citytext" class="form-control" placeholder="Search..." />
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control">Country :</label>
+                                <input type="text" id="countrytext" class="form-control" placeholder="Search..." />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <p>
+
+    </p>
+    <div class="col-md-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th onclick="sortTable(0)">
+                        @Html.DisplayNameFor(model => model.FirstName)
+                    </th>
+                    <th onclick="sortTable(0)">
+                        @Html.DisplayNameFor(model => model.LastName)
+                    </th>
+                    <th onclick="sortTable(0)">
+                        @Html.DisplayNameFor(model => model.Email)
+                    </th>
+                    <th onclick="sortTable(0)">
+                        @Html.DisplayNameFor(model => model.City)
+                    </th>
+                    <th onclick="sortTable(0)">
+                        @Html.DisplayNameFor(model => model.Country)
+                    </th>
+                    <th id="edittab"></th>
+                </tr>
+            </thead>
+            <tbody id="bodycontent">
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FirstName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LastName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.City)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Country)
+                        </td>
+                        <td>
+                            <button class="btn btn-default btn-sm"> @Html.ActionLink("Edit", "Edit", new { id = item.EmployeeId })</button>|
+                            <button class="btn btn-default btn-sm"> @Html.ActionLink("Details", "Details", new { id = item.EmployeeId })</button>|
+                            <button class="btn btn-default btn-sm">@Html.ActionLink("Delete", "Delete", new { id = item.EmployeeId })</button>                           
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <script type="text/javascript">
+
+        function sortTable(n) {
+            var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+            table = document.getElementById("bodycontent");
+            switching = true;
+            //Set the sorting direction to ascending:
+            dir = "asc";
+            /*Make a loop that will continue until
+            no switching has been done:*/
+            while (switching) {
+                //start by saying: no switching is done:
+                switching = false;
+                rows = table.rows;
+                /*Loop through all table rows (except the
+                first, which contains table headers):*/
+                for (i = 0; i < (rows.length - 1); i++) {
+                    //start by saying there should be no switching:
+                    shouldSwitch = false;
+                    /*Get the two elements you want to compare,
+                    one from current row and one from the next:*/
+                    x = rows[i].getElementsByTagName("td")[n];
+                    y = rows[i + 1].getElementsByTagName("td")[n];
+                    /*check if the two rows should switch place,
+                    based on the direction, asc or desc:*/
+                    if (dir == "asc") {
+                        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                            //if so, mark as a switch and break the loop:
+                            shouldSwitch = true;
+                            break;
+                        }
+                    } else if (dir == "desc") {
+                        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                            //if so, mark as a switch and break the loop:
+                            shouldSwitch = true;
+                            break;
+                        }
+                    }
+                }
+                if (shouldSwitch) {
+                    /*If a switch has been marked, make the switch
+                    and mark that a switch has been done:*/
+                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                    switching = true;
+                    //Each time a switch is done, increase this count by 1:
+                    switchcount++;
+                } else {
+                    /*If no switching has been done AND the direction is "asc",
+                    set the direction to "desc" and run the while loop again.*/
+                    if (switchcount == 0 && dir == "asc") {
+                        dir = "desc";
+                        switching = true;
+                    }
+                }
+            }
+        }
+
+        $(document).ready(function () {
+
+
+            $('input[type="text"]').keyup(function () {
+                var s = $(this).val().trim();
+                var ss = s.toLowerCase();
+                $("table tr").each(function (records) {
+                    if (records !== 0) {
+                        var id = $(this).find("td").text();
+                        if (id.indexOf(ss) !== 0 && id.toLowerCase().indexOf(ss.toLowerCase()) < 0) {
+                            $(this).hide();
+                        }
+                        else {
+                            $(this).show();
+                        }
+                    }
+                })
+            });
+            $('input[id="firstnametext"]').keyup(function () {
+
+                var s = $(this).val().trim();
+                var ss = s.toLowerCase();
+                $("table tr").each(function (records) {
+                    if (records !== 0) {
+                        var id = $(this).find("td:first").text();
+                        if (id.indexOf(ss) !== 0 && id.toLowerCase().indexOf(ss.toLowerCase()) < 0) {
+                            $(this).hide();
+                        }
+                        else {
+                            $(this).show();
+                        }
+                    }
+                })
+            });
+            $('input[id="lastnametext"]').keyup(function () {
+
+                var s = $(this).val().trim();
+                var ss = s.toLowerCase();
+                $("table tr").each(function (records) {
+                    if (records !== 0) {
+                        var id = $(this).find("td:nth-child(2)").text();
+                        if (id.indexOf(ss) !== 0 && id.toLowerCase().indexOf(ss.toLowerCase()) < 0) {
+                            $(this).hide();
+                        }
+                        else {
+                            $(this).show();
+                        }
+                    }
+                })
+            });
+            $('input[id="emailtext"]').keyup(function () {
+
+                var s = $(this).val().trim();
+                var ss = s.toLowerCase();
+                $("table tr").each(function (records) {
+                    if (records !== 0) {
+                        var id = $(this).find("td:nth-child(3)").text();
+                        if (id.indexOf(ss) !== 0 && id.toLowerCase().indexOf(ss.toLowerCase()) < 0) {
+                            $(this).hide();
+                        }
+                        else {
+                            $(this).show();
+                        }
+                    }
+                })
+            });
+            $('input[id="citytext"]').keyup(function () {
+
+                var s = $(this).val().trim();
+                var ss = s.toLowerCase();
+                $("table tr").each(function (records) {
+                    if (records !== 0) {
+                        var id = $(this).find("td:nth-child(4)").text();
+                        if (id.indexOf(ss) !== 0 && id.toLowerCase().indexOf(ss.toLowerCase()) < 0) {
+                            $(this).hide();
+                        }
+                        else {
+                            $(this).show();
+                        }
+                    }
+                })
+            });
+            $('input[id="countrytext"]').keyup(function () {
+
+                var s = $(this).val().trim();
+                var ss = s.toLowerCase();
+                $("table tr").each(function (records) {
+                    if (records !== 0) {
+                        var id = $(this).find("td:nth-child(5)").text();
+                        if (id.indexOf(ss) !== 0 && id.toLowerCase().indexOf(ss.toLowerCase()) < 0) {
+                            $(this).hide();
+                        }
+                        else {
+                            $(this).show();
+                        }
+                    }
+                })
+            });
+
+            $('select#itemsperpage').change(function () {
+                var newpage = parseInt($(this).val());
+                $("div.holder").jPages("destroy").jPages({
+                    containerID: "bodycontent",
+                    perPage: newpage,
+                    keyBrowse: true,
+                    links: "blank",
+                    scrollBrowse: true
+                });
+
+            });
+
+            $("div.holder").jPages({
+                containerID: "bodycontent",
+                midRange: 15,
+                keyBrowse: true,
+                links: "blank",
+                scrollBrowse: true
+
+            });
+        });
+
+    </script>
+
+
+</body>
+</html>
